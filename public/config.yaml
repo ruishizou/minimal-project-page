@@ -1,0 +1,110 @@
+project:
+  title: "Atlas: A Minimal Academic Folio"
+  subtitle: "A configurable research page for publishing papers, demos, and reproducible artifacts."
+  venue: "Conference on Human-Centered AI Systems 2026"
+  award: "Best Paper Honorable Mention"
+  abstract: "Atlas demonstrates how a small metadata file and markdown sections can generate a polished single-page academic folio. The mock study focuses on helping research teams publish a paper, demo, benchmark, and citation without maintaining a bespoke website."
+  teaser:
+    image: "/sections/teaser.svg"
+    alt: "Layered academic project materials arranged as a neutral system diagram"
+
+authors:
+  - name: "Mira Patel"
+    affiliation: "hm"
+    homepage: "https://example.com/mira-patel"
+    tags:
+      - "co-first"
+  - name: "Noah Kim"
+    affiliation: "wcm"
+    homepage: "https://example.com/noah-kim"
+    tags:
+      - "co-first"
+  - name: "Elena Garcia"
+    affiliation: "uw"
+    homepage: "https://example.com/elena-garcia"
+    tags:
+      - "co-last"
+  - name: "Riley Chen"
+    affiliation: "columbia"
+    tags:
+      - "co-last"
+
+affiliations:
+  - id: "hm"
+    name: "Hamilton Madison House"
+    image: "/images/affiliations/HM.webp"
+  - id: "wcm"
+    name: "Weill Cornell Medical College"
+    image: "/images/affiliations/WCM.webp"
+  - id: "uw"
+    name: "University of Washington"
+    image: "/images/affiliations/UW.webp"
+  - id: "columbia"
+    name: "Columbia University"
+    image: "/images/affiliations/Columbia.webp"
+  - id: "uo"
+    name: "University of Oregon"
+    image: "/images/affiliations/UO.webp"
+  - id: "cornell"
+    name: "Cornell University"
+    image: "/images/affiliations/Cornell.webp"
+  - id: "neu"
+    name: "Northeastern University"
+    image: "/images/affiliations/NEU.webp"
+
+links:
+  paper:
+    href: "https://example.com/atlas-paper.pdf"
+  preprint:
+    href: "https://example.com/atlas-preprint.pdf"
+  code:
+    href: "https://github.com/example/atlas-folio"
+  prototypes:
+    items:
+      - label: "Interactive Demo"
+        href: "https://example.com/atlas-demo"
+      - label: "Artifact Browser"
+        href: "https://example.com/atlas-artifacts"
+  extras:
+    - label: "Dataset"
+      href: "https://example.com/atlas-dataset"
+      icon: "Database"
+    - label: "DOI"
+      href: "https://doi.org/10.0000/example.atlas"
+      icon: "BadgeCheck"
+
+sections:
+  - name: "overview"
+    title: "Overview"
+    videos:
+      - "project-presentation"
+      - "artifact-demo"
+  - name: "method"
+    title: "Method"
+  - name: "results"
+    title: "Results"
+
+videos:
+  - id: "project-presentation"
+    title: "Project Presentation"
+    provider: "youtube"
+    url: "https://www.youtube.com/watch?v=c8PE6zYSFSc"
+  - id: "artifact-demo"
+    title: "Artifact Demo"
+    provider: "youtube"
+    url: "https://www.youtube.com/watch?v=c8PE6zYSFSc"
+  - id: "configuration-walkthrough"
+    title: "Configuration Walkthrough"
+    provider: "youtube"
+    url: "https://www.youtube.com/watch?v=c8PE6zYSFSc"
+
+citation:
+  label: "Atlas 2026"
+  bibtex: |
+    @inproceedings{patel2026atlas,
+      title = {Atlas: A Minimal Academic Folio},
+      author = {Patel, Mira and Kim, Noah and Garcia, Elena and Chen, Riley},
+      booktitle = {Conference on Human-Centered AI Systems},
+      year = {2026},
+      doi = {10.0000/example.atlas}
+    }
