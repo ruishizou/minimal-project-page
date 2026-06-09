@@ -93,3 +93,7 @@ Use UI libraries and icon libraries whenever possible. Do not rewrite components
 - lucide-react (https://lucide.dev/guide/react/) for icons
 
 You should use tailwindcss to style everything. 
+
+## Inspiration
+
+This project is inspired by [orderedlist/minimal](https://github.com/orderedlist/minimal) and [ritesh-kanchi/axya](https://github.com/ritesh-kanchi/axya).
