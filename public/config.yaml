@@ -5,7 +5,7 @@ project:
   award: "Best Paper Honorable Mention"
   abstract: "Atlas demonstrates how a small metadata file and markdown sections can generate a polished single-page academic folio. The mock study focuses on helping research teams publish a paper, demo, benchmark, and citation without maintaining a bespoke website."
   teaser:
-    image: "/sections/teaser.svg"
+    image: "/images/teaser.svg"
     alt: "Layered academic project materials arranged as a neutral system diagram"
 
 authors:
@@ -81,6 +81,8 @@ sections:
       - "artifact-demo"
   - name: "method"
     title: "Method"
+    videos:
+      - "video-teaser"
   - name: "results"
     title: "Results"
 
@@ -93,12 +95,16 @@ videos:
     title: "Artifact Demo"
     provider: "youtube"
     url: "https://www.youtube.com/watch?v=c8PE6zYSFSc"
-  - id: "configuration-walkthrough"
-    title: "Configuration Walkthrough"
-    provider: "youtube"
-    url: "https://www.youtube.com/watch?v=c8PE6zYSFSc"
+  - id: "video-teaser"
+    title: "Local Video Teaser"
+    provider: "local"
+    file: "video_teaser.mp4"
+    autoplay: true
+    hideProgressBar: true
 
 citation:
+  title: "BibTeX"
+  text: "Optional paragraph shown before the BibTeX block. Remove this field to hide the paragraph."
   label: "Atlas 2026"
   bibtex: |
     @inproceedings{patel2026atlas,

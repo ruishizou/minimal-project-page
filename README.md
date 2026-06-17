@@ -28,8 +28,12 @@ videos:
   - id: "demo"
     title: "Demo"
     provider: "local"
-    url: "/videos/demo.mp4"
+    file: "demo.mp4"
+    autoplay: true
+    hideProgressBar: true
 ```
+
+Local video files should be placed in `public/videos`. Use `file: "demo.mp4"` for `/videos/demo.mp4`, or use `url` for an explicit local or remote video URL. `autoplay` works for local videos and YouTube embeds. `hideProgressBar` hides YouTube controls and renders local videos without native controls. Local videos use their intrinsic aspect ratio by default; set `aspectRatio` only when you want to force a figure ratio.
 
 Insert one or more videos after a configured section:
 
@@ -78,6 +82,22 @@ links:
     - label: "DOI"
       href: "https://doi.org/10.0000/example"
       icon: "BadgeCheck"
+```
+
+## Citation
+
+Define a copyable BibTeX entry in `public/config.yaml`. The citation title and text are optional. The title defaults to `Citing these materials`; the text renders only when provided.
+
+```yaml
+citation:
+  title: "Citation"
+  text: "Optional paragraph shown before the BibTeX block. Remove this field to hide the paragraph."
+  label: "Project 2026"
+  bibtex: |
+    @inproceedings{project2026,
+      title = {Project Title},
+      year = {2026}
+    }
 ```
 
 ## Constraints

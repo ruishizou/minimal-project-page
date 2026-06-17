@@ -1,13 +1,40 @@
 ## Results
 
-The mock project page provides the expected publication surface for a research artifact without requiring custom layout work for every paper. Readers can browse the paper structure, open external artifacts, watch the presentation, and copy the BibTeX entry.
+Markdown sections can combine prose, images, tables, links, code, and video directives. This makes the template useful for project pages that need to explain a paper, demo, dataset, or reproducible artifact without adding custom React components.
 
-### Mock Evaluation
+### Images
 
-| Task | Median Time | Outcome |
-| --- | ---: | --- |
-| Find the paper PDF | 8 seconds | Artifact link visible in header and hero |
-| Locate implementation details | 14 seconds | Section grid and sticky navigation |
-| Copy the citation | 5 seconds | Dedicated citation control |
+Place images under `public/images` and reference them from markdown with a root-relative path:
 
-The same structure can be reused for additional projects by editing YAML metadata and replacing the markdown files.
+```md
+![GistVis interface overview](/images/gistvis.jpg)
+```
+
+![GistVis interface overview](/images/gistvis.jpg)
+
+Standalone images render as full-width figures with square edges. If an image is colocated with a section, relative paths are also supported.
+
+### Code Blocks
+
+Use fenced code blocks for commands, snippets, configuration, or pseudocode:
+
+```tsx
+type ArtifactLink = {
+  label: string
+  href: string
+}
+```
+
+Inline code such as `public/config.yaml` is styled consistently with the rest of the document.
+
+### Tables And Lists
+
+GitHub-flavored markdown tables are supported for compact comparisons:
+
+| Element | Where To Configure | Rendered As |
+| --- | --- | --- |
+| Project metadata | `public/config.yaml` | Header and link buttons |
+| Long-form content | `public/sections/*.md` | Article sections |
+| Local media | `public/images` and `public/videos` | Figures |
+
+Use lists for workflows, requirements, or artifact checklists. The page navigation automatically tracks section headings, so each `##` and `###` heading becomes part of the reading structure.

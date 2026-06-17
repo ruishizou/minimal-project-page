@@ -1,11 +1,15 @@
 ## Overview
 
-Atlas is a mock research project page that keeps the academic content first: title, authors, affiliations, artifact links, paper sections, a talk embed, and a copyable citation. The page is intentionally compact so readers can scan the work and jump directly to supporting materials.
+This template builds a compact academic project page from one YAML file and a small set of markdown sections. Start with `public/config.yaml`, then replace the demo metadata with the title, author list, affiliations, artifact links, media, and citation for your project.
 
-The folio is driven by `public/config.yaml`, while long-form section content lives in markdown files whose names match the configured section names.
+Each item in `sections` maps to a markdown file in `public/sections`. For example, this section is configured as `name: "overview"`, so the page loads `public/sections/overview.md`.
 
-### Contributions
+### Template Workflow
 
-- A single-page React and TypeScript layout for academic project pages.
-- YAML-driven project metadata for title, authors, affiliations, links, award details, video, and BibTeX.
-- Markdown sections with image, table, list, link, and inline code support.
+1. Update the `project` block with the page title, abstract, award, and teaser image.
+2. Add authors and affiliations, including optional homepages and affiliation logos.
+3. Configure external links such as paper, preprint, code, prototypes, datasets, or DOI pages.
+4. Write the long-form page content in markdown files under `public/sections`.
+5. Add videos and the BibTeX citation only when the project needs them.
+
+The left navigation is generated from the configured sections and the headings inside each markdown file, so you can reorganize the page by editing content rather than touching React code.

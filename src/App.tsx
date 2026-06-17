@@ -1,7 +1,9 @@
 import {
+  Children,
   Fragment,
   isValidElement,
   memo,
+  type CSSProperties,
   useEffect,
   useMemo,
   useState,
@@ -449,7 +451,7 @@ function AuthorLine({
 
 function AffiliationList({ affiliations }: { affiliations: Affiliation[] }) {
   return (
-    <ul className="m-0 mb-2 flex max-w-6xl list-none flex-wrap items-center gap-x-4 gap-y-1 p-0 text-left text-sm leading-6 text-muted-foreground">
+    <ul className="m-0 mb-2 flex max-w-6xl list-none flex-wrap items-baseline gap-x-5 gap-y-2 p-0 text-left text-sm leading-6 text-muted-foreground">
       {affiliations.map((affiliation, index) => (
         <li key={affiliation.id} className="min-w-0">
           <AffiliationItem affiliation={affiliation} number={index + 1} />
@@ -471,16 +473,16 @@ function AffiliationItem({
       href={affiliation.url}
       target="_blank"
       rel="noreferrer"
-      className="min-w-0 text-muted-foreground no-underline hover:text-foreground hover:underline"
+      className="text-muted-foreground no-underline hover:text-foreground hover:underline"
     >
       {affiliation.name}
     </a>
   ) : (
-    <span className="min-w-0">{affiliation.name}</span>
+    <span>{affiliation.name}</span>
   )
 
   return (
-    <span className="inline-grid min-w-0 grid-cols-[auto_1.25rem_auto] items-center gap-x-1.5 whitespace-nowrap">
+    <span className="inline-flex max-w-full items-baseline align-baseline">
       <sup className="text-[0.68rem] leading-none text-muted-foreground">
         {number}
       </sup>
@@ -488,11 +490,9 @@ function AffiliationItem({
         <img
           src={affiliation.image}
           alt=""
-          className="size-5 shrink-0 rounded-full object-contain"
+          className="h-5 w-auto max-w-5 shrink-0 self-center object-contain"
         />
-      ) : (
-        <span className="size-5" aria-hidden="true" />
-      )}
+      ) : null}
       {name}
     </span>
   )
@@ -508,13 +508,13 @@ function ContributionNotes({ authors }: { authors: Author[] }) {
   }
 
   return (
-    <ul className="m-0 mb-2 mt-1 list-none p-0 text-left text-xs leading-5 text-muted-foreground">
+    <ul className="m-0 mb-2 mt-1 flex list-none flex-wrap items-baseline gap-x-4 gap-y-1 p-0 text-left text-xs leading-5 text-muted-foreground">
       {tags.map((tag) => (
-        <li key={tag}>
-          <sup className="mr-1 align-super text-[0.68rem]">
+        <li key={tag} className="inline-flex items-baseline gap-1">
+          <sup className="align-super text-[0.68rem]">
             {getTagMarker(tag)}
           </sup>
-          {getTagLabel(tag)}
+          <span>{getTagLabel(tag)}</span>
         </li>
       ))}
     </ul>
@@ -595,6 +595,7 @@ const CitationSection = memo(function CitationSection({
   citation: CitationConfig
 }) {
   const [copiedCitation, setCopiedCitation] = useState(false)
+  const title = citation.title ?? "Citing these materials"
 
   const copyCitation = () => {
     void navigator.clipboard.writeText(citation.bibtex).then(() => {
@@ -607,13 +608,10 @@ const CitationSection = memo(function CitationSection({
     <section id="citation" className="scroll-mt-20">
       <div className="mt-8 mb-4">
         <h2 className="border-b pb-3 text-2xl font-semibold leading-tight text-foreground">
-          Citing these materials
+          {title}
         </h2>
       </div>
-      <p className="my-5">
-        If you use {citation.label} or reference this project, please use the
-        following BibTeX entry.
-      </p>
+      {citation.text ? <p className="my-5">{citation.text}</p> : null}
       <div className="relative my-6 max-w-4xl">
         <pre className="max-h-[32rem] overflow-x-auto rounded-md border bg-muted/35 p-4 pr-28 font-mono text-[0.8rem] leading-6 text-foreground">
           <code>{citation.bibtex}</code>
@@ -683,6 +681,13 @@ const MarkdownSection = memo(function MarkdownSection({
           renderHeading(5, children),
         h6: ({ children }: { children?: React.ReactNode }) =>
           renderHeading(6, children),
+        img: ({ src, alt }: { src?: string; alt?: string }) => (
+          <MarkdownImage
+            src={src}
+            alt={alt}
+            basePath={`/sections/${encodeURIComponent(sectionId)}.md`}
+          />
+        ),
         p: ({ children }: { children?: React.ReactNode }) => {
           const videoId = getVideoDirectiveId(children)
 
@@ -692,7 +697,7 @@ const MarkdownSection = memo(function MarkdownSection({
             )
           }
 
-          return markdownComponents.p({ children })
+          return <MarkdownParagraph>{children}</MarkdownParagraph>
         },
       }}
     >
@@ -746,12 +751,20 @@ const ConfiguredVideoEmbed = memo(function ConfiguredVideoEmbed({
 })
 
 const VideoEmbed = memo(function VideoEmbed({ video }: { video: VideoConfig }) {
+  const usesAspectFrame = video.provider === "youtube" || Boolean(video.aspectRatio)
+
   return (
     <figure className="my-8 max-w-4xl">
-      <div className="aspect-video w-full overflow-hidden rounded-md border bg-card">
+      <div
+        className={cn(
+          "w-full overflow-hidden bg-card",
+          usesAspectFrame ? "aspect-video" : "",
+        )}
+        style={getVideoFrameStyle(video)}
+      >
         {video.provider === "youtube" ? (
           <iframe
-            src={getYoutubeEmbedUrl(video.url)}
+            src={getYoutubeEmbedUrl(video)}
             title={video.title}
             className="h-full w-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -761,8 +774,14 @@ const VideoEmbed = memo(function VideoEmbed({ video }: { video: VideoConfig }) {
           <video
             src={video.url}
             title={video.title}
-            controls
-            className="h-full w-full bg-black"
+            controls={!video.hideProgressBar}
+            autoPlay={video.autoplay}
+            muted={video.autoplay}
+            playsInline
+            className={cn(
+              "block w-full bg-black",
+              usesAspectFrame ? "h-full object-contain" : "h-auto",
+            )}
           />
         )}
       </div>
@@ -773,6 +792,10 @@ const VideoEmbed = memo(function VideoEmbed({ video }: { video: VideoConfig }) {
   )
 })
 
+function getVideoFrameStyle(video: VideoConfig): CSSProperties | undefined {
+  return video.aspectRatio ? { aspectRatio: video.aspectRatio } : undefined
+}
+
 function getVideoDirectiveId(children: React.ReactNode) {
   const text = getNodeText(children).trim()
   const match = /^\{\{\s*video\s*:\s*([^}]+?)\s*\}\}$/.exec(text)
@@ -780,18 +803,19 @@ function getVideoDirectiveId(children: React.ReactNode) {
   return match?.[1].trim()
 }
 
-function getYoutubeEmbedUrl(url: string) {
+function getYoutubeEmbedUrl(video: VideoConfig) {
   try {
-    const parsedUrl = new URL(url)
+    const parsedUrl = new URL(video.url)
     const hostname = parsedUrl.hostname.replace(/^www\./, "")
+    const embedUrl = new URL(video.url)
 
     if (hostname === "youtu.be") {
       const videoId = parsedUrl.pathname.split("/").filter(Boolean)[0]
 
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : url
-    }
-
-    if (
+      if (videoId) {
+        embedUrl.href = `https://www.youtube.com/embed/${videoId}`
+      }
+    } else if (
       hostname === "youtube.com" ||
       hostname === "m.youtube.com" ||
       hostname === "music.youtube.com"
@@ -799,13 +823,22 @@ function getYoutubeEmbedUrl(url: string) {
       const videoId = parsedUrl.searchParams.get("v")
 
       if (videoId) {
-        return `https://www.youtube.com/embed/${videoId}`
+        embedUrl.href = `https://www.youtube.com/embed/${videoId}`
       }
     }
 
-    return url
+    if (video.autoplay) {
+      embedUrl.searchParams.set("autoplay", "1")
+      embedUrl.searchParams.set("mute", "1")
+    }
+
+    if (video.hideProgressBar) {
+      embedUrl.searchParams.set("controls", "0")
+    }
+
+    return embedUrl.toString()
   } catch {
-    return url
+    return video.url
   }
 }
 
@@ -925,7 +958,7 @@ const markdownComponents = {
     </MarkdownHeading>
   ),
   p: ({ children }: { children?: React.ReactNode }) => (
-    <p className="my-5">{children}</p>
+    <MarkdownParagraph>{children}</MarkdownParagraph>
   ),
   a: ({
     href,
@@ -964,13 +997,7 @@ const markdownComponents = {
     </pre>
   ),
   img: ({ src, alt }: { src?: string; alt?: string }) => (
-    <img
-      src={src ?? ""}
-      alt={alt ?? ""}
-      loading="lazy"
-      decoding="async"
-      className="my-8 block h-auto w-full"
-    />
+    <MarkdownImage src={src} alt={alt} />
   ),
   table: ({ children }: { children?: React.ReactNode }) => (
     <div className="my-8 overflow-x-auto">
@@ -987,6 +1014,70 @@ const markdownComponents = {
       {children}
     </td>
   ),
+}
+
+function MarkdownParagraph({
+  children,
+}: {
+  children?: React.ReactNode
+}) {
+  if (isStandaloneImageNode(children)) {
+    return <figure className="my-8 max-w-4xl">{children}</figure>
+  }
+
+  return <p className="my-5">{children}</p>
+}
+
+function MarkdownImage({
+  src,
+  alt,
+  basePath,
+}: {
+  src?: string
+  alt?: string
+  basePath?: string
+}) {
+  return (
+    <img
+      src={resolveMarkdownAssetSrc(src, basePath)}
+      alt={alt ?? ""}
+      loading="lazy"
+      decoding="async"
+      className="block h-auto w-full"
+    />
+  )
+}
+
+function isStandaloneImageNode(children: React.ReactNode) {
+  const nodes = Children.toArray(children).filter((child) => {
+    return typeof child !== "string" || child.trim().length > 0
+  })
+
+  return (
+    nodes.length === 1 &&
+    isValidElement(nodes[0]) &&
+    nodes[0].type === "img"
+  )
+}
+
+function resolveMarkdownAssetSrc(src?: string, basePath?: string) {
+  if (!src) {
+    return ""
+  }
+
+  if (/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(src)) {
+    return src
+  }
+
+  if (src.startsWith("public/")) {
+    return `/${src.slice("public/".length)}`
+  }
+
+  if (!basePath) {
+    return src
+  }
+
+  return new URL(src, `http://localhost${basePath}`).pathname
 }
 
 function getPageTrackerItems(

@@ -286,6 +286,8 @@ const normalizeVideo = (
     )
   }
 
+  const url = normalizeVideoUrl(video, fieldName, provider)
+
   return {
     id:
       optionalString(video.id) ??
@@ -293,13 +295,72 @@ const normalizeVideo = (
       requireString(video.id, `${fieldName}.id`),
     title: requireString(video.title, `${fieldName}.title`),
     provider,
-    url: requireString(video.url, `${fieldName}.url`),
+    url,
+    autoplay: optionalBoolean(video.autoplay),
+    hideProgressBar:
+      optionalBoolean(video.hideProgressBar) ??
+      optionalBoolean(video.hide_progress_bar),
+    aspectRatio:
+      normalizeAspectRatio(video.aspectRatio, `${fieldName}.aspectRatio`) ??
+      normalizeAspectRatio(video.aspect_ratio, `${fieldName}.aspect_ratio`),
   }
+}
+
+const normalizeAspectRatio = (
+  input: unknown,
+  fieldName: string,
+): string | undefined => {
+  if (input === undefined || input === null) {
+    return undefined
+  }
+
+  const value =
+    typeof input === "number" ? String(input) : requireString(input, fieldName)
+  const normalizedValue = value
+    .replace(":", "/")
+    .replace(/\s*\/\s*/g, " / ")
+
+  if (/^\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?$/.test(normalizedValue)) {
+    return normalizedValue
+  }
+
+  throw new Error(
+    `${fieldName} must be a number or ratio string like "16/9"`,
+  )
+}
+
+const normalizeVideoUrl = (
+  video: Record<string, unknown>,
+  fieldName: string,
+  provider: string,
+): string => {
+  const url = optionalString(video.url)
+  const file = optionalString(video.file)
+
+  if (provider === "local") {
+    return resolveLocalVideoUrl(
+      file ?? url ?? requireString(video.url, `${fieldName}.url`),
+    )
+  }
+
+  return requireString(video.url, `${fieldName}.url`)
+}
+
+const resolveLocalVideoUrl = (input: string): string => {
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(input)) {
+    return input
+  }
+
+  const filename = input.replace(/^\.?\/*/, "").replace(/^videos\//, "")
+
+  return `/videos/${filename}`
 }
 
 const normalizeCitation = (
   citation: Record<string, unknown>,
 ): CitationConfig => ({
+  title: optionalString(citation.title),
+  text: optionalString(citation.text),
   label: requireString(citation.label, "citation.label"),
   bibtex: requireString(citation.bibtex, "citation.bibtex"),
 })
@@ -347,6 +408,9 @@ const optionalString = (input: unknown): string | undefined =>
   typeof input === "string" && input.trim().length > 0
     ? input.trim()
     : undefined
+
+const optionalBoolean = (input: unknown): boolean | undefined =>
+  typeof input === "boolean" ? input : undefined
 
 const optionalStringList = (
   input: unknown,

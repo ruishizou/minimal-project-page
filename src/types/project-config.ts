@@ -49,9 +49,14 @@ export type VideoConfig = {
   title: string
   provider: "youtube" | "local"
   url: string
+  autoplay?: boolean
+  hideProgressBar?: boolean
+  aspectRatio?: string
 }
 
 export type CitationConfig = {
+  title?: string
+  text?: string
   label: string
   bibtex: string
 }
