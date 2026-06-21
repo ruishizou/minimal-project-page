@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Open Quarry Data Lab icon">
+  <path fill="#64748b" d="M12 18l20-10 20 10v28L32 56 12 46V18z"/>
+  <path fill="#cbd5e1" d="M18 22l14-7 14 7-14 7-14-7z"/>
+  <path fill="#e2e8f0" d="M18 34l14 7 14-7v8l-14 7-14-7v-8z"/>
+  <path fill="none" stroke="#334155" stroke-width="3" d="M18 28l14 7 14-7"/>
+</svg>

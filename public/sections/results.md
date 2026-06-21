@@ -10,9 +10,15 @@ Place images under `public/images` and reference them from markdown with a root-
 ![GistVis interface overview](/images/gistvis.jpg)
 ```
 
-![GistVis interface overview](/images/gistvis.jpg)
+To render an image at 80% width with a caption, add `#width=80` or `#width=80%` to the image URL and put the caption in the markdown image title:
 
-Standalone images render as full-width figures with square edges. If an image is colocated with a section, relative paths are also supported.
+```md
+![GistVis interface overview](/images/gistvis.jpg#width=80 "Figure 1. GistVis interface overview rendered as an 80% width figure.")
+```
+
+![GistVis interface overview](/images/gistvis.jpg#width=80 "Figure 1. GistVis interface overview rendered as an 80% width figure.")
+
+Standalone images render as figures with square edges. If an image is colocated with a section, relative paths are also supported.
 
 ### Code Blocks
 

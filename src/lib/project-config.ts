@@ -6,6 +6,7 @@ export {
 export type {
   Affiliation,
   Author,
+  AuthorTagDefinition,
   CitationConfig,
   ProjectConfig,
   ProjectLink,

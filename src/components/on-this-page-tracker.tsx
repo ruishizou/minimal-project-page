@@ -6,10 +6,21 @@ import {
   useRef,
   useState,
 } from "react"
-import { Menu, X } from "lucide-react"
+import {
+  ArrowUpRight,
+  Menu,
+  X,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import {
+  getCurrentHashId,
+  getHashHref,
+  getNextActiveTrackerId,
+  SCROLL_KEYS,
+  scrollToElementId,
+} from "@/utils/scroll-navigation"
 
 export type PageTrackerItem = {
   id: string
@@ -17,9 +28,15 @@ export type PageTrackerItem = {
   depth: 0 | 1 | 2 | 3
 }
 
+export type PageTrackerLink = {
+  label: string
+  href: string
+}
+
 type OnThisPageTrackerProps = {
   title: string
   items: PageTrackerItem[]
+  supportingLinks?: PageTrackerLink[]
   footer?: ReactNode
   isMenuOpen: boolean
   onMenuToggle: () => void
@@ -29,6 +46,7 @@ type OnThisPageTrackerProps = {
 export function OnThisPageTracker({
   title,
   items,
+  supportingLinks = [],
   footer,
   isMenuOpen,
   onMenuToggle,
@@ -104,10 +122,6 @@ export function OnThisPageTracker({
             {title}
           </a>
 
-          <h2 className="mb-3 text-xs font-medium uppercase text-muted-foreground">
-            On This Page
-          </h2>
-
           <ul className="m-0 list-none border-l border-border p-0">
             {items.map((item) => {
               const isActive = item.id === activeId
@@ -135,9 +149,41 @@ export function OnThisPageTracker({
           </ul>
         </div>
 
-        {footer ? (
-          <div className="mt-8 pt-4 text-xs leading-5 text-muted-foreground md:mt-auto">
-            {footer}
+        {supportingLinks.length > 0 || footer ? (
+          <div className="mt-8 space-y-4 md:mt-auto">
+            {supportingLinks.length > 0 ? (
+              <ul className="m-0 list-none border-b border-border p-0 pb-5">
+                {supportingLinks.map((link) => (
+                  <li key={link.href}>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="default"
+                      className="h-9 w-full justify-between px-0 text-muted-foreground hover:bg-transparent"
+                    >
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={onNavigate}
+                      >
+                        <span>{link.label}</span>
+                        <ArrowUpRight
+                          className="size-3.5 shrink-0"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+
+            {footer ? (
+              <div className="pt-5 text-xs leading-5 text-muted-foreground">
+                {footer}
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>
@@ -267,115 +313,5 @@ function useActiveTrackerItem(items: PageTrackerItem[]) {
       ? activeId
       : items[0]?.id ?? "",
     activateItem,
-  }
-}
-
-const SCROLL_KEYS = new Set([
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowUp",
-  "End",
-  "Home",
-  "PageDown",
-  "PageUp",
-  " ",
-])
-
-function getNextActiveTrackerId(items: PageTrackerItem[]) {
-  const candidates = items
-    .map((item) => ({
-      id: item.id,
-      element: document.getElementById(item.id),
-    }))
-    .filter(
-      (candidate): candidate is { id: string; element: HTMLElement } =>
-        Boolean(candidate.element),
-    )
-
-  if (candidates.length === 0) {
-    return items[0]?.id ?? ""
-  }
-
-  if (isScrolledToBottom()) {
-    return candidates[candidates.length - 1].id
-  }
-
-  const topOffset = 112
-  let nextActiveId = candidates[0].id
-
-  for (const candidate of candidates) {
-    if (candidate.element.getBoundingClientRect().top <= topOffset) {
-      nextActiveId = candidate.id
-    } else {
-      break
-    }
-  }
-
-  return nextActiveId
-}
-
-function isScrolledToBottom() {
-  const documentElement = document.documentElement
-
-  return (
-    window.scrollY + window.innerHeight >=
-    documentElement.scrollHeight - 2
-  )
-}
-
-function scrollToElementId(
-  id: string,
-  options: { replace?: boolean } = {},
-) {
-  const element = document.getElementById(id)
-
-  if (!element) {
-    return
-  }
-
-  const hashHref = getHashHref(id)
-
-  if (options.replace) {
-    window.history.replaceState(null, "", hashHref)
-  } else {
-    window.history.pushState(null, "", hashHref)
-  }
-
-  window.scrollTo({
-    top: getElementScrollTop(element),
-    left: window.scrollX,
-  })
-  element.focus({ preventScroll: true })
-}
-
-function getElementScrollTop(element: HTMLElement) {
-  const scrollMarginTop = Number.parseFloat(
-    window.getComputedStyle(element).scrollMarginTop,
-  )
-
-  return Math.max(
-    element.getBoundingClientRect().top +
-      window.scrollY -
-      (Number.isNaN(scrollMarginTop) ? 0 : scrollMarginTop),
-    0,
-  )
-}
-
-function getHashHref(id: string) {
-  return `#${encodeURIComponent(id)}`
-}
-
-function getCurrentHashId() {
-  const hash = window.location.hash.slice(1)
-
-  if (!hash) {
-    return undefined
-  }
-
-  try {
-    return decodeURIComponent(hash)
-  } catch {
-    return hash
   }
 }

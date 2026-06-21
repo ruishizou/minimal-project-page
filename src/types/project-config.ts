@@ -17,6 +17,11 @@ export type Author = {
   tags?: string[]
 }
 
+export type AuthorTagDefinition = {
+  marker: string
+  label: string
+}
+
 export type Affiliation = {
   id: string
   name: string
@@ -29,6 +34,7 @@ export type ProjectLink = {
   href?: string
   type: string
   icon?: string
+  important?: boolean
   items: ProjectLinkItem[]
 }
 
@@ -36,6 +42,7 @@ export type ProjectLinkItem = {
   label: string
   href: string
   icon?: string
+  important?: boolean
 }
 
 export type ProjectSection = {
@@ -63,7 +70,9 @@ export type CitationConfig = {
 
 export type ProjectConfig = {
   project: ProjectMetadata
+  copyright?: string
   authors: Author[]
+  authorTags: Record<string, AuthorTagDefinition>
   affiliations: Affiliation[]
   links: ProjectLink[]
   sections: ProjectSection[]

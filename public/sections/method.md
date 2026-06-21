@@ -2,7 +2,7 @@
 
 Videos are reusable entries in `public/config.yaml`. Define each video once in the top-level `videos` list, then attach it to a section or insert it inline from markdown.
 
-The local video figure for this section is configured as `video-teaser`. Because it uses `provider: "local"` and `file: "video_teaser.mp4"`, the app resolves it to `/videos/video_teaser.mp4`.
+The local video figure for this section is configured as `video-teaser`. Because it uses `provider: "local"` and `file: "project_showcase.mp4"`, the app resolves it to `/videos/project_showcase.mp4`.
 
 ### Section Video Figures
 
@@ -17,9 +17,9 @@ sections:
 
 videos:
   - id: "video-teaser"
-    title: "Local Video Teaser"
+    title: "Project Showcase Mockup"
     provider: "local"
-    file: "video_teaser.mp4"
+    file: "project_showcase.mp4"
     autoplay: true
     hideProgressBar: true
 ```

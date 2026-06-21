@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Meridian School of Design icon">
+  <circle cx="32" cy="32" r="25" fill="#ecfdf5"/>
+  <path fill="#059669" d="M32 10l18 40-18-8-18 8 18-40z"/>
+  <path fill="#d1fae5" d="M32 20v22l9 4-9-26z"/>
+</svg>

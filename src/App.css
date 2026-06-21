@@ -131,3 +131,19 @@
     @apply min-h-screen;
     }
 }
+
+@layer components {
+  .markdown-image-frame {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .markdown-image-frame {
+      width: var(--markdown-image-width, 100%);
+    }
+
+    .markdown-image-frame[data-centered="true"] {
+      margin-inline: auto;
+    }
+  }
+}
