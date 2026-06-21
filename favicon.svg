@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Minimal academic project page favicon</title>
+  <desc id="desc">A simple academic project page mark made from stacked pages and an abstract A shape.</desc>
+  <rect width="512" height="512" fill="#f8fafc" />
+  <path
+    fill="#dbe4ee"
+    d="M112 104h224l64 64v224H112V104Z"
+  />
+  <path
+    fill="#ffffff"
+    stroke="#1f2937"
+    stroke-linejoin="round"
+    stroke-width="18"
+    d="M88 80h224l88 88v264H88V80Z"
+  />
+  <path
+    fill="#e8eef5"
+    stroke="#1f2937"
+    stroke-linejoin="round"
+    stroke-width="18"
+    d="M312 80v88h88"
+  />
+  <path
+    fill="#1f2937"
+    d="M256 166 148 356h54l20-40h68l20 40h54L256 166Zm-12 106 12-24 12 24 13 26h-50l13-26Z"
+  />
+  <path
+    fill="#e85d2a"
+    d="M352 332h48v48h-48z"
+  />
+</svg>

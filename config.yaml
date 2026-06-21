@@ -1,0 +1,135 @@
+project:
+  title: "A minimal Academic Project Page"
+  subtitle: "A configurable research page for publishing papers, demos, and reproducible artifacts."
+  venue: "Conference on Human-Centered AI Systems 2026"
+  award: "Best Paper Honorable Mention"
+  abstract: "This minimal academic project page demonstrates how a small metadata file and markdown sections can generate a polished single-page academic folio. The mock study focuses on helping research teams publish a paper, demo, benchmark, and citation without maintaining a bespoke website."
+  teaser:
+    image: "/images/teaser.svg"
+    alt: "Layered academic project materials arranged as a neutral system diagram"
+
+copyright: "© Ruishi Zou 2026"
+
+authorTags:
+  co-first:
+    marker: "*"
+    label: "Equal contribution"
+  co-last:
+    marker: "†"
+    label: "Co-last authors"
+
+authors:
+  - name: "Mira Patel"
+    affiliation: "northstar"
+    homepage: "https://example.com/mira-patel"
+    tags:
+      - "co-first"
+  - name: "Jordan Lee"
+    affiliation: "northstar"
+    homepage: "https://example.com/jordan-lee"
+    tags:
+      - "co-first"
+  - name: "Noah Kim"
+    affiliation: "meridian"
+    homepage: "https://example.com/noah-kim"
+  - name: "Elena Garcia"
+    affiliation: "cascade"
+    homepage: "https://example.com/elena-garcia"
+    tags:
+      - "co-last"
+  - name: "Riley Chen"
+    affiliation: "signal-harbor"
+    homepage: "https://example.com/riley-chen"
+  - name: "Samira Okafor"
+    affiliation: "lumenfield"
+    homepage: "https://example.com/samira-okafor"
+  - name: "Theo Bennett"
+    affiliation: "open-quarry"
+    homepage: "https://example.com/theo-bennett"
+    tags:
+      - "co-last"
+  - name: "Aisha Rao"
+    affiliation: "nova-civic"
+    homepage: "https://example.com/aisha-rao"
+    tags:
+      - "co-last"
+
+affiliations:
+  - id: "northstar"
+    name: "Northstar Systems Institute"
+    image: "/images/affiliations/northstar.svg"
+  - id: "meridian"
+    name: "Meridian School of Design"
+    image: "/images/affiliations/meridian.svg"
+  - id: "cascade"
+    name: "Cascade Analytics Lab"
+    image: "/images/affiliations/cascade.svg"
+  - id: "signal-harbor"
+    name: "Signal Harbor University"
+    image: "/images/affiliations/signal-harbor.svg"
+  - id: "lumenfield"
+    name: "Lumenfield Research Center"
+    image: "/images/affiliations/lumenfield.svg"
+  - id: "open-quarry"
+    name: "Open Quarry Data Lab"
+    image: "/images/affiliations/open-quarry.svg"
+  - id: "nova-civic"
+    name: "Nova Civic AI Institute"
+    image: "/images/affiliations/nova-civic.svg"
+
+links:
+  paper:
+    href: "https://example.com/minimal-project-page-paper.pdf"
+  preprint:
+    href: "https://example.com/minimal-project-page-preprint.pdf"
+  code:
+    href: "https://github.com/example/minimal-project-page"
+    important: true
+  prototypes:
+    items:
+      - label: "Interactive Demo"
+        href: "https://example.com/minimal-project-page-demo"
+      - label: "Artifact Browser"
+        href: "https://example.com/minimal-project-page-artifacts"
+  extras:
+    - label: "Dataset"
+      href: "https://example.com/minimal-project-page-dataset"
+      icon: "Database"
+      important: true
+
+sections:
+  - name: "overview"
+    title: "Overview"
+    videos:
+      - "project-presentation"
+  - name: "method"
+    title: "Method"
+    videos:
+      - "video-teaser"
+  - name: "results"
+    title: "Results"
+
+videos:
+  - id: "project-presentation"
+    title: "Project Presentation"
+    provider: "youtube"
+    url: "https://www.youtube.com/watch?v=RvreULjnzFo"
+  - id: "video-teaser"
+    title: "Project Showcase Mockup"
+    provider: "local"
+    file: "project_showcase.mp4"
+    autoplay: true
+    hideProgressBar: true
+
+citation:
+  title: "BibTeX"
+  text: "Optional paragraph shown before the BibTeX block. Remove this field to hide the paragraph."
+  label: "Minimal Project Page 2026"
+  bibtex: |
+    @inproceedings{patel2026minimalprojectpage,
+      title = {A minimal Academic Project page},
+      author = {Patel, Mira and Lee, Jordan and Kim, Noah and Garcia, Elena and Chen, Riley and Okafor, Samira and Bennett, Theo and Rao, Aisha},
+      booktitle = {Conference on Human-Centered AI Systems},
+      year = {2026},
+      doi = {10.0000/example.minimal-project-page}
+    }

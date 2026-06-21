@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cascade Analytics Lab icon">
+  <rect x="10" y="42" width="12" height="12" fill="#38bdf8"/>
+  <rect x="26" y="30" width="12" height="24" fill="#0ea5e9"/>
+  <rect x="42" y="18" width="12" height="36" fill="#0369a1"/>
+  <path fill="none" stroke="#075985" stroke-width="5" stroke-linecap="square" d="M10 24h12v-8h16V8h16"/>
+</svg>
