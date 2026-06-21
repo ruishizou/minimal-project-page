@@ -21,6 +21,7 @@ import {
 } from "@/utils/project-config-guards"
 import { normalizeLinks } from "@/utils/project-config-links"
 import { normalizeVideos } from "@/utils/project-config-videos"
+import { getPublicPath } from "@/utils/public-paths"
 
 export const normalizeProjectConfig = (input: unknown): ProjectConfig => {
   const root = requireRecord(input, "config")
@@ -39,7 +40,9 @@ export const normalizeProjectConfig = (input: unknown): ProjectConfig => {
       abstract: requireString(project.abstract, "project.abstract"),
       teaser: teaser
         ? {
-            image: requireString(teaser.image, "project.teaser.image"),
+            image: getPublicPath(
+              requireString(teaser.image, "project.teaser.image"),
+            ),
             alt: requireString(teaser.alt, "project.teaser.alt"),
           }
         : undefined,
@@ -100,11 +103,12 @@ const normalizeAuthorTags = (
 const normalizeAffiliations = (input: unknown): Affiliation[] =>
   requireArray(input, "affiliations").map((item, index) => {
     const affiliation = requireRecord(item, `affiliations[${index}]`)
+    const image = optionalString(affiliation.image)
 
     return {
       id: requireString(affiliation.id, `affiliations[${index}].id`),
       name: requireString(affiliation.name, `affiliations[${index}].name`),
-      image: optionalString(affiliation.image),
+      image: image ? getPublicPath(image) : undefined,
       url: optionalString(affiliation.url),
     }
   })

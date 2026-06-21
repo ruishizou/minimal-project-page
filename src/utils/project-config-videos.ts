@@ -6,6 +6,7 @@ import {
   requireRecord,
   requireString,
 } from "@/utils/project-config-guards"
+import { getPublicPath } from "@/utils/public-paths"
 
 export const normalizeVideos = (
   input: unknown,
@@ -106,11 +107,14 @@ const normalizeVideoUrl = (
 }
 
 const resolveLocalVideoUrl = (input: string): string => {
-  if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(input)) {
+  if (/^[a-z][a-z0-9+.-]*:/i.test(input)) {
     return input
   }
 
-  const filename = input.replace(/^\.?\/*/, "").replace(/^videos\//, "")
+  const filename = input
+    .replace(/^public\//, "")
+    .replace(/^\.?\/*/, "")
+    .replace(/^videos\//, "")
 
-  return `/videos/${filename}`
+  return getPublicPath(`videos/${filename}`)
 }

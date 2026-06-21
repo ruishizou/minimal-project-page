@@ -2,9 +2,10 @@ import { parse } from "yaml"
 
 import type { ProjectConfig } from "@/types/project-config"
 import { normalizeProjectConfig } from "@/utils/project-config-normalize"
+import { getPublicPath } from "@/utils/public-paths"
 
 export const loadProjectConfig = async (): Promise<ProjectConfig> => {
-  const response = await fetch("/config.yaml")
+  const response = await fetch(getPublicPath("config.yaml"))
 
   if (!response.ok) {
     throw new Error("Unable to load public/config.yaml")
@@ -19,7 +20,7 @@ export const loadProjectSections = async (
   const entries = await Promise.all(
     config.sections.map(async (section) => {
       const response = await fetch(
-        `/sections/${encodeURIComponent(section.name)}.md`,
+        getPublicPath(`sections/${encodeURIComponent(section.name)}.md`),
       )
 
       if (!response.ok) {

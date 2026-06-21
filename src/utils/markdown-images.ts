@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { getPublicPath } from "@/utils/public-paths"
+
 export type MarkdownImagePresentationInput = {
   src?: string
   title?: string
@@ -98,17 +100,17 @@ const resolveMarkdownAssetSrc = (src?: string, basePath?: string) => {
     return ""
   }
 
-  if (/^(?:[a-z][a-z0-9+.-]*:|#|\/)/i.test(src)) {
+  if (/^(?:[a-z][a-z0-9+.-]*:|#)/i.test(src)) {
     return src
   }
 
-  if (src.startsWith("public/")) {
-    return `/${src.slice("public/".length)}`
+  if (src.startsWith("public/") || src.startsWith("/")) {
+    return getPublicPath(src)
   }
 
   if (!basePath) {
     return src
   }
 
-  return new URL(src, `http://localhost${basePath}`).pathname
+  return getPublicPath(new URL(src, `http://localhost${basePath}`).pathname)
 }
