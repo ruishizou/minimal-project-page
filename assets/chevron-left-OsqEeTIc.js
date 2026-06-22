@@ -1,1 +1,0 @@
-import{t as e}from"./index-CM_vJwkl.js";var t=[[`path`,{d:`m15 18-6-6 6-6`,key:`1wnfg3`}]],n=e(`chevron-left`,t);export{t as __iconNode,n as default};

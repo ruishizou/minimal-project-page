@@ -1,1 +1,0 @@
-import{t as e}from"./index-CM_vJwkl.js";var t=[[`circle`,{cx:`12`,cy:`12`,r:`10`,key:`1mglay`}],[`path`,{d:`m16 10-4 4-4-4`,key:`894hmk`}]],n=e(`circle-chevron-down`,t);export{t as __iconNode,n as default};
